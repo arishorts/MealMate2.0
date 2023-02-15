@@ -10,6 +10,11 @@ body {
   text-decoration: none;
 }
 
+#activeIngredientSearch,
+#activeGrocerySearch {
+  visibility: hidden;
+}
+
 img {
   max-height: 300px;
 }

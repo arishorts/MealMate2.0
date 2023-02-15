@@ -4,6 +4,27 @@
 //https://developers.google.com/maps/documentation/javascript/places
 //http://jsfiddle.net/2crQ7/
 //https://developers.google.com/maps/documentation/javascript
+
+document
+  .getElementById("searchGroceryProductInput")
+  .addEventListener("focus", () => {
+    $("#activeGrocerySearch").css("visibility", "visible");
+  });
+
+document
+  .getElementById("searchGroceryProductInput")
+  .addEventListener("blur", () => {
+    $("#activeGrocerySearch").css("visibility", "hidden");
+  });
+
+document.getElementById("byIngredientsInput").addEventListener("focus", () => {
+  $("#activeIngredientSearch").css("visibility", "visible");
+});
+
+document.getElementById("byIngredientsInput").addEventListener("blur", () => {
+  $("#activeIngredientSearch").css("visibility", "hidden");
+});
+
 var map = null;
 var currentInfoWindow = null;
 window.initMap = initMap;
