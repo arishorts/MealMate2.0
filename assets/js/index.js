@@ -4,9 +4,10 @@
 //https://developers.google.com/maps/documentation/javascript/places
 //http://jsfiddle.net/2crQ7/
 //https://developers.google.com/maps/documentation/javascript
-
+let searchHistory = [];
 var map = null;
 var currentInfoWindow = null;
+
 window.initMap = initMap;
 function initMap() {
   // Try HTML5 geolocation.
@@ -165,6 +166,24 @@ const spoonacularApp = {
       event.preventDefault();
       spoonacularApp.validateGroceryProduct();
     });
+
+    spoonacularApp.generateHistory();
+  },
+  generateHistory: () => {
+    $("#searchHistoryContainer").empty();
+    let searchHistory = localStorage.getItem("searchHistory")
+      ? JSON.parse(localStorage.getItem("searchHistory"))
+      : [];
+    for (let i = 0; i < searchHistory.length; i++) {
+      let item = searchHistory[i].recipe;
+      console.log(searchHistory[i]);
+      let key = Object.keys(searchHistory[i])[0];
+      historyEl = $("<button>");
+      historyEl.text(key + " : " + item);
+      historyEl.addClass("bg-red-800 text-white p-2 mx-4 mt-2 rounded-lg");
+      historyEl.click(() => spoonacularApp.searchByIngredient(item));
+      $("#searchHistoryContainer").append(historyEl);
+    }
   },
   apiCall: (userRequest, queries, options) => {
     const apikey = "?apiKey=c43e85f3c2a64849b63ec8539234f19c";
@@ -186,14 +205,23 @@ const spoonacularApp = {
     console.log(error);
     console.log("you have an error");
   },
-
   validateByIngredients: () => {
+    //validate the incoming search and split it to be appropriately parsed by the API in required formatting
     var recipeArray = $("#byIngredientsInput").val().split(",");
     var recipeString = recipeArray[0];
     for (let index = 1; index < recipeArray.length; index++) {
       recipeString = recipeString + ",+" + recipeArray[index].trim();
     }
+    //add the validated string to search history to be presented on an appended list
+    let searchHistory = localStorage.getItem("searchHistory")
+      ? JSON.parse(localStorage.getItem("searchHistory"))
+      : [];
+    if (searchHistory.length > 9) searchHistory.splice(0, 1);
+    searchHistory.push({ recipe: recipeString });
+    localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
     spoonacularApp.searchByIngredient(recipeString);
+
+    spoonacularApp.generateHistory();
   },
   searchByIngredient: async (queries) => {
     var data = await spoonacularApp.apiCall(
