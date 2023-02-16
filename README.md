@@ -25,7 +25,7 @@ No installation needed.
 
 ## Usage
 
-The website can be found at: https://arishorts.github.io/MealMate/
+The website can be found at: https://arishorts.github.io/MealMate2.0/
 
 The Spoonacular Meal Planner and Notebook app is the perfect tool for anyone looking to streamline their meal planning and keep track of their favorite recipes and ingredients. The app allows you to generate a meal plan, with the option to add your own ingredients and recipes to a personal notebook. With its intuitive design, using the Spoonacular app is a breeze! Simply select your preferred meals and ingredients, and let the app do the rest.
 
